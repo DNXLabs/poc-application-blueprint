@@ -20,7 +20,7 @@ jobs:
         uses: rlespinasse/github-slug-action@v3.x
 
       - name: set APP_REVISION variable in environment for next steps
-        run: echo "APP_REVISION=${{ github.event.number }}-${{ env.GITHUB_HEAD_REF_SLUG }}" >> $GITHUB_ENV
+        run: echo "APP_REVISION=${GITHUB_SHA::6}" >> $GITHUB_ENV
 
       - name: create a github deployment
         uses: bobheadxi/deployments@v0.5.2
@@ -49,7 +49,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::158947203889:role/githubOidcAccess
           role-session-name: github-deploy
-          aws-region: ap-southeast-1
+          aws-region: ap-southeast-2
 
       - name: Diff
         run: |

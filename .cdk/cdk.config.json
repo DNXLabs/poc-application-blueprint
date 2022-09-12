@@ -1,0 +1,48 @@
+{
+    "name": "blueprint-ecs-app",
+    "container": {
+        "port": 80,
+        "image": {
+            "uri": "158947203889.dkr.ecr.ap-southeast-2.amazonaws.com/blueprint-ecs-app"
+        },
+        "buildArgs": {}
+    },
+    "stages": {
+        "labs2": {
+            "aws": {
+                "account_name": "labs2",
+                "account": "158947203889",
+                "region": "ap-southeast-2"
+            },
+            "ecs": {
+                "cluster_arn": ""
+            },
+            "loadBalancer": {
+                "healthcheckPath": "/index.html"
+            },
+            "route53": {
+                "enable": true,
+                "domain": "labs2.dnx.host",
+                "hostname": "blueprint-ecs-app"
+            },
+            "acm": {
+                "create": false,
+                "arn": "arn:aws:acm:ap-southeast-2:158947203889:certificate/44fe4011-802b-4fd1-a21e-1d4871975f10"
+            },
+            "secretsManager": [
+
+            ],
+            "task": {
+                "desiredCount": 1,
+                "cpu": 256,
+                "memoryLimitMiB": 512,
+                "spot": true
+            },
+            "autoscaling": {
+                "cpuTargetUtilizationPercent": 70,
+                "minCapacity": 1,
+                "maxCapacity": 4
+            }
+        }
+    }
+}
